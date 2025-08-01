@@ -38,9 +38,7 @@
   users.users.noderyos = {
    isNormalUser = true;
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [
-      nix-output-monitor sdrpp
-    ];
+    packages = with pkgs; [];
   };
 
   environment.systemPackages = with pkgs; [
