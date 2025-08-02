@@ -12,5 +12,18 @@
     qbittorrent
   ];
 
+  imports = [
+    ./i3
+    ./picom
+    ./rofi
+    ./polybar
+    ./fastfetch
+    ./nvim
+    ./zsh
+    ./wallpaper
+    ./xresources
+    ./st
+  ];
+
   home.stateVersion = "25.05";
 }

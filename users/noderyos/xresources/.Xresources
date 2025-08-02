@@ -1,0 +1,41 @@
+*.font: Berkeley:pixelsize=20:antialias=true:autohint=true;
+
+*.foreground: #FFFFFF
+#ifdef background_opacity
+*.background: [background_opacity]#000000
+#else
+*.background: #000000
+#endif
+*.cursorColor: #FFFFFF
+
+! Black
+*.color0: #404040
+*.color8: #7f7f7f
+
+! Red
+*.color1: #ff5d00
+*.color9: #ff9a00
+
+! Green
+*.color2: #00FF00
+*.color10: #7FFF7F
+
+! Yellow
+*.color3: #ff5d00
+*.color11: #ff9a00
+
+! Blue
+*.color4: #0065ff
+*.color12: #00a2ff
+
+! Magenta
+*.color5: #FF40FF
+*.color13: #FFC0FF
+
+! Cyan
+*.color6: #0065ff
+*.color14: #00a2ff
+
+! White
+*.color7: #FFFFFF
+*.color15: #FFFFFF

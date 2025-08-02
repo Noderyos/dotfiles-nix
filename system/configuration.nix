@@ -31,13 +31,16 @@
     desktopManager.xterm.enable = false;
     windowManager.i3 = {
       enable = true;
-      extraPackages = with pkgs; [ rofi st polybar picom ];
+      extraPackages = with pkgs; [];
     };
   };
-  
+
+  programs.zsh.enable = true;
+
   users.users.noderyos = {
    isNormalUser = true;
     extraGroups = [ "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [];
   };
 
