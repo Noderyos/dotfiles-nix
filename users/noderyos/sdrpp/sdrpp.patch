@@ -1,0 +1,50 @@
+diff --git a/core/src/core.cpp b/core/src/core.cpp
+index e234d6d8..8d1c7292 100644
+--- a/core/src/core.cpp
++++ b/core/src/core.cpp
+@@ -277,8 +277,8 @@ int sdrpp_main(int argc, char* argv[]) {
+     defConfig["modulesDirectory"] = root + "/modules";
+     defConfig["resourcesDirectory"] = root + "/res";
+ #else
+-    defConfig["modulesDirectory"] = INSTALL_PREFIX "/lib/sdrpp/plugins";
+-    defConfig["resourcesDirectory"] = INSTALL_PREFIX "/share/sdrpp";
++    defConfig["modulesDirectory"] = "@prefix@/lib/sdrpp/plugins";
++    defConfig["resourcesDirectory"] = "@prefix@/share/sdrpp";
+ #endif
+ 
+     // Load config
+@@ -359,6 +359,10 @@ int sdrpp_main(int argc, char* argv[]) {
+ 
+     core::configManager.acquire();
+     std::string resDir = core::configManager.conf["resourcesDirectory"];
++    {
++        std::size_t pos = resDir.find("@prefix@");
++        if (pos != std::string::npos) resDir.replace(pos, 8, INSTALL_PREFIX);
++    }
+     json bandColors = core::configManager.conf["bandColors"];
+     core::configManager.release();
+ 
+diff --git a/core/src/gui/main_window.cpp b/core/src/gui/main_window.cpp
+index 65436fe4..22451941 100644
+--- a/core/src/gui/main_window.cpp
++++ b/core/src/gui/main_window.cpp
+@@ -39,6 +39,12 @@ void MainWindow::init() {
+     json menuElements = core::configManager.conf["menuElements"];
+     std::string modulesDir = core::configManager.conf["modulesDirectory"];
+     std::string resourcesDir = core::configManager.conf["resourcesDirectory"];
++    {
++        std::size_t pos = modulesDir.find("@prefix@");
++        if (pos != std::string::npos) modulesDir.replace(pos, 8, INSTALL_PREFIX);
++        pos = resourcesDir.find("@prefix@");
++        if (pos != std::string::npos) resourcesDir.replace(pos, 8, INSTALL_PREFIX);
++    }
+     core::configManager.release();
+ 
+     // Assert that directories are absolute
+@@ -704,4 +710,4 @@ bool MainWindow::isPlaying() {
+ 
+ void MainWindow::setFirstMenuRender() {
+     firstMenuRender = true;
+-}
+\ No newline at end of file
++}

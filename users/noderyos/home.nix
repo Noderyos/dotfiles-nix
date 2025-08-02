@@ -6,10 +6,11 @@
 
   home.packages = with pkgs; [
     nix-output-monitor
-    sdrpp
     obs-studio
     gpredict
     qbittorrent
+    vesktop
+    chromium
   ];
 
   imports = [
@@ -23,6 +24,7 @@
     ./wallpaper
     ./xresources
     ./st
+    ./sdrpp
   ];
 
   home.stateVersion = "25.05";
