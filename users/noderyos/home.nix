@@ -10,11 +10,13 @@
     gpredict
     qbittorrent
     vesktop
-    chromium
+    satdump
+    mullvad-vpn
   ];
 
   imports = [
     ./i3
+    ./chromium
     ./picom
     ./rofi
     ./polybar

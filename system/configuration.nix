@@ -25,6 +25,8 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   services.displayManager.defaultSession = "none+i3";
   services.xserver = {
     enable = true;
@@ -40,9 +42,11 @@
 
   programs.zsh.enable = true;
 
+  hardware.rtl-sdr.enable = true;
+
   users.users.noderyos = {
    isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "plugdev" ];
     shell = pkgs.zsh;
     packages = with pkgs; [];
   };
