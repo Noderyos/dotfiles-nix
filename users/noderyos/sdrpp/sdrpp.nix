@@ -30,6 +30,7 @@
   meteor_demodulator ? true,
   radio ? true,
   weather_sat_decoder ? false,
+  radiosonde_decoder ? true,
 
   # Misc
   discord_presence ? true,
@@ -38,7 +39,9 @@
   rigctl_server ? true,
   scanner ? true,
 }:
-
+let
+  radiosondePatched = import ./radiosonde.nix { inherit pkgs; };
+in
 pkgs.pkgs.stdenv.mkDerivation rec {
   pname = "sdrpp";
 
@@ -53,9 +56,13 @@ pkgs.pkgs.stdenv.mkDerivation rec {
     hash = "sha256-fwOCH6CPtEzBIDmbSq9s2NbwxBq73Fka7USAghkytR4=";
   };
 
-  patches = [ ./sdrpp.patch ];
-
+  patches = [ patches/sdrpp-runtime.patch patches/add-radiosonde.patch ];
+  
   postPatch = ''
+    mkdir -p decoder_modules/sdrpp_radiosonde
+    cp -rv ${radiosondePatched}/* decoder_modules/sdrpp_radiosonde/
+    chmod -R u+rw decoder_modules/sdrpp_radiosonde 
+
     substituteInPlace CMakeLists.txt \
       --replace "/usr/share" "share" \
       --replace "set(CMAKE_INSTALL_PREFIX" "#set(CMAKE_INSTALL_PREFIX"
@@ -131,6 +138,7 @@ pkgs.pkgs.stdenv.mkDerivation rec {
     (pkgs.lib.cmakeBool "OPT_BUILD_METEOR_DEMODULATOR" meteor_demodulator)
     (pkgs.lib.cmakeBool "OPT_BUILD_RADIO" radio)
     (pkgs.lib.cmakeBool "OPT_BUILD_WEATHER_SAT_DECODER" weather_sat_decoder)
+    (pkgs.lib.cmakeBool "OPT_BUILD_RADIOSONDE_DECODER" radiosonde_decoder)
 
     # Misc
     (pkgs.lib.cmakeBool "OPT_BUILD_DISCORD_PRESENCE" discord_presence)
