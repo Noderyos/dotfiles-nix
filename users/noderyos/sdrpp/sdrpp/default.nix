@@ -1,35 +1,59 @@
-# Adapted from nixpkgs sdrpp derivation
 {
-  pkgs,
-
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  cmake,
+  pkg-config,
+  libX11,
+  glfw,
+  glew,
+  fftwFloat,
+  volk,
+  zstd,
   # Sources
   airspy_source ? true,
+  airspy,
   airspyhf_source ? true,
+  airspyhf,
   bladerf_source ? true,
+  libbladeRF,
   file_source ? true,
   hackrf_source ? true,
+  hackrf,
   limesdr_source ? true,
-  perseus_source ? false,
-  plutosdr_source ? true,
+  limesuite,
+  perseus_source ? false, # needs libperseus-sdr, not yet available in nixpks
+  plutosdr_source ? stdenv.hostPlatform.isLinux,
+  libiio,
+  libad9361,
   rfspace_source ? true,
   rtl_sdr_source ? true,
+  rtl-sdr-osmocom,
+  libusb1, # osmocom better w/ rtlsdr v4
   rtl_tcp_source ? true,
   sdrplay_source ? false,
+  sdrplay,
   soapy_source ? true,
+  soapysdr-with-plugins,
   spyserver_source ? true,
   usrp_source ? false,
+  uhd,
+  boost,
 
   # Sinks
   audio_sink ? true,
+  rtaudio,
   network_sink ? true,
   portaudio_sink ? false,
+  portaudio,
 
   # Decoders
   falcon9_decoder ? false,
-  m17_decoder ? true,
+  m17_decoder ? false,
+  codec2,
   meteor_demodulator ? true,
   radio ? true,
-  weather_sat_decoder ? false,
+  weather_sat_decoder ? false, # is missing some dsp/pll.h
   radiosonde_decoder ? true,
 
   # Misc
@@ -38,31 +62,37 @@
   recorder ? true,
   rigctl_server ? true,
   scanner ? true,
+  callPackage
 }:
 let
-  radiosondePatched = import ./radiosonde.nix { inherit pkgs; };
+  radiosondePatched = callPackage ./radiosonde {};
 in
-pkgs.pkgs.stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   pname = "sdrpp";
 
+  # SDR++ uses a rolling release model.
+  # Choose a git hash from head and use the date from that commit as
+  # version qualifier
   git_hash = "f67fa0c66c9e24b822e6f66e2fd840cda92445ad";
   git_date = "2025-07-20";
   version = "1.2.1-unstable-" + git_date;
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "AlexandreRouma";
     repo = "SDRPlusPlus";
     rev = git_hash;
     hash = "sha256-fwOCH6CPtEzBIDmbSq9s2NbwxBq73Fka7USAghkytR4=";
   };
 
-  patches = [ patches/sdrpp-runtime.patch patches/add-radiosonde.patch ];
+  patches = [ 
+    patches/sdrpp-runtime.patch
+    patches/add-radiosonde.patch
+  ];
 
   postPatch = ''
     mkdir -p decoder_modules/sdrpp_radiosonde
     cp -rv ${radiosondePatched}/* decoder_modules/sdrpp_radiosonde/
-    chmod -R u+rw decoder_modules/sdrpp_radiosonde 
-
+    chmod -R u+rw decoder_modules/sdrpp_radiosonde
     substituteInPlace CMakeLists.txt \
       --replace "/usr/share" "share" \
       --replace "set(CMAKE_INSTALL_PREFIX" "#set(CMAKE_INSTALL_PREFIX"
@@ -74,89 +104,90 @@ pkgs.pkgs.stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [
-    pkgs.cmake
-    pkgs.pkg-config
+    cmake
+    pkg-config
   ];
 
   buildInputs = [
-    pkgs.glfw
-    pkgs.glew
-    pkgs.fftwFloat
-    pkgs.volk
-    pkgs.zstd
+    glfw
+    glew
+    fftwFloat
+    volk
+    zstd
   ]
-  ++ pkgs.lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.xorg.libX11
-  ++ pkgs.lib.optional airspy_source pkgs.airspy
-  ++ pkgs.lib.optional airspyhf_source pkgs.airspyhf
-  ++ pkgs.lib.optional bladerf_source pkgs.libbladeRF
-  ++ pkgs.lib.optional hackrf_source pkgs.hackrf
-  ++ pkgs.lib.optional limesdr_source pkgs.limesuite
-  ++ pkgs.lib.optionals rtl_sdr_source [
-    pkgs.rtl-sdr-osmocom
-    pkgs.libusb1
+  ++ lib.optional stdenv.hostPlatform.isLinux libX11
+  ++ lib.optional airspy_source airspy
+  ++ lib.optional airspyhf_source airspyhf
+  ++ lib.optional bladerf_source libbladeRF
+  ++ lib.optional hackrf_source hackrf
+  ++ lib.optional limesdr_source limesuite
+  ++ lib.optionals rtl_sdr_source [
+    rtl-sdr-osmocom
+    libusb1
   ]
-  ++ pkgs.lib.optional sdrplay_source pkgs.sdrplay
-  ++ pkgs.lib.optional soapy_source pkgs.soapysdr-with-plugins
-  ++ pkgs.lib.optionals plutosdr_source [
-    pkgs.libiio
-    pkgs.libad9361
+  ++ lib.optional sdrplay_source sdrplay
+  ++ lib.optional soapy_source soapysdr-with-plugins
+  ++ lib.optionals plutosdr_source [
+    libiio
+    libad9361
   ]
-  ++ pkgs.lib.optionals usrp_source [
-    pkgs.uhd
-    pkgs.boost
+  ++ lib.optionals usrp_source [
+    uhd
+    boost
   ]
-  ++ pkgs.lib.optional audio_sink pkgs.rtaudio
-  ++ pkgs.lib.optional portaudio_sink pkgs.portaudio
-  ++ pkgs.lib.optional m17_decoder pkgs.codec2;
+  ++ lib.optional audio_sink rtaudio
+  ++ lib.optional portaudio_sink portaudio
+  ++ lib.optional m17_decoder codec2;
 
   cmakeFlags = [
     # Sources
-    (pkgs.lib.cmakeBool "OPT_BUILD_AIRSPYHF_SOURCE" airspyhf_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_AIRSPY_SOURCE" airspy_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_BLADERF_SOURCE" bladerf_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_FILE_SOURCE" file_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_HACKRF_SOURCE" hackrf_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_LIMESDR_SOURCE" limesdr_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_PERSEUS_SOURCE" perseus_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_PLUTOSDR_SOURCE" plutosdr_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RFSPACE_SOURCE" rfspace_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RTL_SDR_SOURCE" rtl_sdr_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RTL_TCP_SOURCE" rtl_tcp_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_SDRPLAY_SOURCE" sdrplay_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_SOAPY_SOURCE" soapy_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_SPYSERVER_SOURCE" spyserver_source)
-    (pkgs.lib.cmakeBool "OPT_BUILD_USRP_SOURCE" usrp_source)
+    (lib.cmakeBool "OPT_BUILD_AIRSPYHF_SOURCE" airspyhf_source)
+    (lib.cmakeBool "OPT_BUILD_AIRSPY_SOURCE" airspy_source)
+    (lib.cmakeBool "OPT_BUILD_BLADERF_SOURCE" bladerf_source)
+    (lib.cmakeBool "OPT_BUILD_FILE_SOURCE" file_source)
+    (lib.cmakeBool "OPT_BUILD_HACKRF_SOURCE" hackrf_source)
+    (lib.cmakeBool "OPT_BUILD_LIMESDR_SOURCE" limesdr_source)
+    (lib.cmakeBool "OPT_BUILD_PERSEUS_SOURCE" perseus_source)
+    (lib.cmakeBool "OPT_BUILD_PLUTOSDR_SOURCE" plutosdr_source)
+    (lib.cmakeBool "OPT_BUILD_RFSPACE_SOURCE" rfspace_source)
+    (lib.cmakeBool "OPT_BUILD_RTL_SDR_SOURCE" rtl_sdr_source)
+    (lib.cmakeBool "OPT_BUILD_RTL_TCP_SOURCE" rtl_tcp_source)
+    (lib.cmakeBool "OPT_BUILD_SDRPLAY_SOURCE" sdrplay_source)
+    (lib.cmakeBool "OPT_BUILD_SOAPY_SOURCE" soapy_source)
+    (lib.cmakeBool "OPT_BUILD_SPYSERVER_SOURCE" spyserver_source)
+    (lib.cmakeBool "OPT_BUILD_USRP_SOURCE" usrp_source)
 
     # Sinks
-    (pkgs.lib.cmakeBool "OPT_BUILD_AUDIO_SINK" audio_sink)
-    (pkgs.lib.cmakeBool "OPT_BUILD_NETWORK_SINK" network_sink)
-    (pkgs.lib.cmakeBool "OPT_BUILD_NEW_PORTAUDIO_SINK" portaudio_sink)
+    (lib.cmakeBool "OPT_BUILD_AUDIO_SINK" audio_sink)
+    (lib.cmakeBool "OPT_BUILD_NETWORK_SINK" network_sink)
+    (lib.cmakeBool "OPT_BUILD_NEW_PORTAUDIO_SINK" portaudio_sink)
 
     # Decoders
-    (pkgs.lib.cmakeBool "OPT_BUILD_FALCON9_DECODER" falcon9_decoder)
-    (pkgs.lib.cmakeBool "OPT_BUILD_M17_DECODER" m17_decoder)
-    (pkgs.lib.cmakeBool "OPT_BUILD_METEOR_DEMODULATOR" meteor_demodulator)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RADIO" radio)
-    (pkgs.lib.cmakeBool "OPT_BUILD_WEATHER_SAT_DECODER" weather_sat_decoder)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RADIOSONDE_DECODER" radiosonde_decoder)
+    (lib.cmakeBool "OPT_BUILD_FALCON9_DECODER" falcon9_decoder)
+    (lib.cmakeBool "OPT_BUILD_M17_DECODER" m17_decoder)
+    (lib.cmakeBool "OPT_BUILD_METEOR_DEMODULATOR" meteor_demodulator)
+    (lib.cmakeBool "OPT_BUILD_RADIO" radio)
+    (lib.cmakeBool "OPT_BUILD_WEATHER_SAT_DECODER" weather_sat_decoder)
+    (lib.cmakeBool "OPT_BUILD_RADIOSONDE_DECODER" radiosonde_decoder)
 
     # Misc
-    (pkgs.lib.cmakeBool "OPT_BUILD_DISCORD_PRESENCE" discord_presence)
-    (pkgs.lib.cmakeBool "OPT_BUILD_FREQUENCY_MANAGER" frequency_manager)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RECORDER" recorder)
-    (pkgs.lib.cmakeBool "OPT_BUILD_RIGCTL_SERVER" rigctl_server)
-    (pkgs.lib.cmakeBool "OPT_BUILD_SCANNER" scanner)
+    (lib.cmakeBool "OPT_BUILD_DISCORD_PRESENCE" discord_presence)
+    (lib.cmakeBool "OPT_BUILD_FREQUENCY_MANAGER" frequency_manager)
+    (lib.cmakeBool "OPT_BUILD_RECORDER" recorder)
+    (lib.cmakeBool "OPT_BUILD_RIGCTL_SERVER" rigctl_server)
+    (lib.cmakeBool "OPT_BUILD_SCANNER" scanner)
   ];
 
   env.NIX_CFLAGS_COMPILE = "-fpermissive";
-  
-  hardeningDisable = pkgs.lib.optional pkgs.stdenv.cc.isClang "format";
 
-  meta = with pkgs.lib; {
+  hardeningDisable = lib.optional stdenv.cc.isClang "format";
+
+  meta = with lib; {
     description = "Cross-Platform SDR Software";
     homepage = "https://github.com/AlexandreRouma/SDRPlusPlus";
     license = licenses.gpl3Only;
     platforms = platforms.unix;
+    maintainers = with maintainers; [ sikmir ];
     mainProgram = "sdrpp";
   };
 }

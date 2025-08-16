@@ -1,13 +1,16 @@
 {
-  pkgs,
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  ...
 }:
 
-pkgs.pkgs.stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   pname = "sdrpp_radiosonde";
   git_date = "2025-08-15";
   version = "0.10";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "dbdexter-dev";
     repo = "sdrpp_radiosonde";
     rev = "8317ba854d1a5d8903c00268121cf2115f1cbc32";
@@ -21,8 +24,8 @@ pkgs.pkgs.stdenv.mkDerivation rec {
     mkdir -p $out
     cp -r . $out/
   '';
-  dontStrip = true;
-  meta = with pkgs.lib; {
+
+  meta = with lib; {
     description = "SDR++ radiosonde module";
     homepage = "https://github.com/dbdexter-dev/sdrpp_radiosonde";
     license = licenses.gpl3Only;
