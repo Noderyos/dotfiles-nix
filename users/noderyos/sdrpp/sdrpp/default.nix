@@ -57,7 +57,7 @@ pkgs.pkgs.stdenv.mkDerivation rec {
   };
 
   patches = [ patches/sdrpp-runtime.patch patches/add-radiosonde.patch ];
-  
+
   postPatch = ''
     mkdir -p decoder_modules/sdrpp_radiosonde
     cp -rv ${radiosondePatched}/* decoder_modules/sdrpp_radiosonde/
@@ -149,7 +149,7 @@ pkgs.pkgs.stdenv.mkDerivation rec {
   ];
 
   env.NIX_CFLAGS_COMPILE = "-fpermissive";
-
+  
   hardeningDisable = pkgs.lib.optional pkgs.stdenv.cc.isClang "format";
 
   meta = with pkgs.lib; {

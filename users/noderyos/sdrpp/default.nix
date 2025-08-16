@@ -1,4 +1,4 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ (callPackage ./sdrpp.nix {}) ];
+  home.packages = with pkgs; [ (callPackage ./sdrpp {}) ];
 }
