@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  patches = [ patches/radiosonde.patch ];
+  patches = [ ./radiosonde.patch ];
 
   installPhase = ''
     mkdir -p $out
