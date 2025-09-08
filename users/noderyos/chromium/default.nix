@@ -5,7 +5,7 @@
       extensions = [
         "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
 	"bhchdcejhohfmigjafbampogmaanbfkg" # User-Agent switcher
-	"bgnkhhnnamicmpeenaelnjfhikgbkllg" # Adblock
+	"cjpalhdlnbpafiamejdnhcphjbkeiagm" # Adblock
 	"eimadpbcbfnmbkopoojfekhnkhdbieeh" # Dark reader
       ];
     };
