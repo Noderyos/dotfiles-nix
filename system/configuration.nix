@@ -42,7 +42,10 @@
 
   programs.zsh.enable = true;
 
-  hardware.rtl-sdr.enable = true;
+  hardware = {
+      rtl-sdr.enable = true;
+      hackrf.enable = true;
+  };
 
   users.users.noderyos = {
    isNormalUser = true;
