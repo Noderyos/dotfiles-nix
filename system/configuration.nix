@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
   imports =
     [
       ./hardware-configuration.nix
@@ -47,9 +48,20 @@
       hackrf.enable = true;
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   users.users.noderyos = {
    isNormalUser = true;
-    extraGroups = [ "wheel" "plugdev" ];
+    extraGroups = [ "wheel" "plugdev" "dialout" ];
     shell = pkgs.zsh;
     packages = with pkgs; [];
   };

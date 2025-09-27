@@ -12,9 +12,14 @@
     vesktop
     satdump
     mullvad-vpn
+    thunderbird
+    python3
+    p7zip
+    lm_sensors nload htop
   ];
 
   imports = [
+    ./ide
     ./i3
     ./chromium
     ./picom
