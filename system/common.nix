@@ -2,22 +2,17 @@
 
 {
   nixpkgs.config.allowUnfree = true;
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
     device = "nodev";
   };
+  
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "aperture";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Paris";
