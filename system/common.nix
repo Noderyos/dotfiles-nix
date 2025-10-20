@@ -13,6 +13,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  boot.tmp.cleanOnBoot = true;
+
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Paris";
@@ -33,6 +35,7 @@
     };
   };
 
+  services.mullvad-vpn.enable = true;
   services.pipewire = {
       enable = true;
       alsa.enable = true;
