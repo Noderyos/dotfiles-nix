@@ -1,11 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  home.username = "noderyos";
-  home.homeDirectory = "/home/noderyos";
+  home.username = "streamer";
+  home.homeDirectory = "/home/streamer";
 
   home.packages = with pkgs; [ ];
-  
+
   imports = [
     ../common
     ./ide

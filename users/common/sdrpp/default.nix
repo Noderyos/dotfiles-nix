@@ -68,6 +68,7 @@ let
     '';
 
     cmakeFlags = prev.cmakeFlags ++ [
+      (pkgs.lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.5")
       (pkgs.lib.cmakeBool "OPT_BUILD_RADIOSONDE_DECODER" radiosonde_decoder)
     ];
   });

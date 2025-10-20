@@ -30,6 +30,7 @@
               useGlobalPkgs = true;
 	          useUserPackages = true;
 	          users.noderyos = ./users/noderyos/home.nix;
+	          users.streamer = ./users/streamer/home.nix;
 	        };
 	      }
         ];

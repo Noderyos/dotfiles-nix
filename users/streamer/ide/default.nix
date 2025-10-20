@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    jetbrains.clion jetbrains.idea-community jetbrains.rider
+    jetbrains.clion jetbrains.idea-community
     android-studio androidenv.androidPkgs.platform-tools
   ];
 }

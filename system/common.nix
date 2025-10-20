@@ -33,8 +33,12 @@
     };
   };
 
-  services.pipewire.enable = false;
-  services.pulseaudio.enable = true;
+  services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
 
   programs.zsh.enable = true;
 
@@ -60,6 +64,14 @@
     shell = pkgs.zsh;
     packages = with pkgs; [];
   };
+  
+  users.users.streamer = {
+   isNormalUser = true;
+    extraGroups = [ "wheel" "plugdev" "dialout" ];
+    shell = pkgs.zsh;
+    packages = with pkgs; [];
+  };
+
 
   environment.systemPackages = with pkgs; [
     wget neovim git
