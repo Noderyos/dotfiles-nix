@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     nix-output-monitor
     obs-studio
+    sublime4
     gpredict
     qbittorrent
     vesktop

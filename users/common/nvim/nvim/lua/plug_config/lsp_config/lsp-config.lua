@@ -3,7 +3,7 @@ local nvim_lsp = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local servers = {'pyright', 'hls', 'lua_ls', 'bashls', 'marksman', 'asm_lsp'}
+local servers = {'pyright', 'hls', 'lua_ls', 'bashls', 'marksman', 'asm_lsp', 'serve_d'}
 
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
@@ -15,6 +15,8 @@ for _, lsp in ipairs(servers) do
         root_dir = function() return vim.loop.cwd() end
     }
 end
+
+nvim_lsp['serve_d'].setup {}
 
 nvim_lsp['ccls'].setup {
     on_attach = on_attach,

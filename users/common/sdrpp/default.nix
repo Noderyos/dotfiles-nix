@@ -41,17 +41,6 @@ let
   };
 
   mySdrpp = baseSdrpp.overrideAttrs (prev: rec {
-    git_hash = "f67fa0c66c9e24b822e6f66e2fd840cda92445ad";
-    git_date = "2025-07-20";
-    version = "1.2.1-unstable-${git_date}";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "AlexandreRouma";
-      repo = "SDRPlusPlus";
-      rev = git_hash;
-      hash = "sha256-fwOCH6CPtEzBIDmbSq9s2NbwxBq73Fka7USAghkytR4=";
-    };
-
     buildInputs = (prev.buildInputs or []) ++ [
       pkgs.rtaudio
     ];
@@ -64,7 +53,6 @@ let
       mkdir -p decoder_modules/sdrpp_radiosonde
       cp -rv ${radiosondePatched}/* decoder_modules/sdrpp_radiosonde/
       chmod -R u+rw decoder_modules/sdrpp_radiosonde
-      substituteInPlace core/src/version.h --replace "1.2.1" "$version"
     '';
 
     cmakeFlags = prev.cmakeFlags ++ [
