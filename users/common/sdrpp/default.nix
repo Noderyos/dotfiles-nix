@@ -46,7 +46,7 @@ let
     ];
 
     patches = (prev.patches or []) ++ [
-      ./patches/add-radiosonde.patch
+      ./add-radiosonde.patch
     ];
 
     postPatch = (prev.postPatch or "") + ''
