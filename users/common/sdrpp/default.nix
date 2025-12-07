@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  radiosondePatched = pkgs.callPackage ./radiosonde {};
+  radiosondePatched = pkgs.callPackage ./radiosonde { };
 
   radiosonde_decoder = true;
 
@@ -41,11 +41,11 @@ let
   };
 
   mySdrpp = baseSdrpp.overrideAttrs (prev: rec {
-    buildInputs = (prev.buildInputs or []) ++ [
+    buildInputs = (prev.buildInputs or [ ]) ++ [
       pkgs.rtaudio
     ];
 
-    patches = (prev.patches or []) ++ [
+    patches = (prev.patches or [ ]) ++ [
       ./add-radiosonde.patch
     ];
 
@@ -64,4 +64,3 @@ in
 {
   home.packages = [ mySdrpp ];
 }
-

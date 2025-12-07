@@ -1,6 +1,6 @@
-{ 
-  pkgs, 
-  ... 
+{
+  pkgs,
+  ...
 }:
 
 pkgs.stdenv.mkDerivation (finalAttrs: {
@@ -14,7 +14,12 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-L4FKnK4k2oImuRxlapQckydpAAyivwASeJixTj+iFrM=";
   };
 
-  nativeBuildInputs = [ pkgs.xorg.libX11 pkgs.xorg.libXft pkgs.pkg-config pkgs.harfbuzz ];
+  nativeBuildInputs = [
+    pkgs.xorg.libX11
+    pkgs.xorg.libXft
+    pkgs.pkg-config
+    pkgs.harfbuzz
+  ];
 
   installPhase = ''
     install -Dm755 st $out/bin/st

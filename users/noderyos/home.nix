@@ -5,7 +5,7 @@
   home.homeDirectory = "/home/noderyos";
 
   home.packages = with pkgs; [ ];
-  
+
   imports = [
     ../common
     ./ide

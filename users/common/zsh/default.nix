@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ eza bat ];
+  home.packages = with pkgs; [
+    eza
+    bat
+  ];
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;

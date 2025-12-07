@@ -13,7 +13,9 @@
     thunderbird
     python3
     p7zip
-    lm_sensors nload htop
+    lm_sensors
+    nload
+    htop
   ];
 
   imports = [

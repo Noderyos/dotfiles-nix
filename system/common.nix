@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -11,7 +16,7 @@
     efiSupport = true;
     device = "nodev";
   };
-  
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -22,7 +27,10 @@
 
   time.timeZone = "Europe/Paris";
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -34,23 +42,23 @@
     desktopManager.xterm.enable = false;
     windowManager.i3 = {
       enable = true;
-      extraPackages = with pkgs; [];
+      extraPackages = with pkgs; [ ];
     };
   };
 
-  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn.enable = false;
   services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   programs.zsh.enable = true;
 
   hardware = {
-      rtl-sdr.enable = true;
-      hackrf.enable = true;
+    rtl-sdr.enable = true;
+    hackrf.enable = true;
   };
 
   programs.steam = {
@@ -65,24 +73,32 @@
   };
 
   users.users.noderyos = {
-   isNormalUser = true;
-    extraGroups = [ "wheel" "plugdev" "dialout" ];
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "plugdev"
+      "dialout"
+    ];
     shell = pkgs.zsh;
-    packages = with pkgs; [];
-  };
-  
-  users.users.streamer = {
-   isNormalUser = true;
-    extraGroups = [ "wheel" "plugdev" "dialout" ];
-    shell = pkgs.zsh;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
+  users.users.streamer = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "plugdev"
+      "dialout"
+    ];
+    shell = pkgs.zsh;
+    packages = with pkgs; [ ];
+  };
 
   environment.systemPackages = with pkgs; [
-    wget neovim git
+    wget
+    neovim
+    git
   ];
 
   system.stateVersion = "25.05";
 }
-

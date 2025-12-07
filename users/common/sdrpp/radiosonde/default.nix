@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "dbdexter-dev";
     repo = "sdrpp_radiosonde";
     rev = "8317ba854d1a5d8903c00268121cf2115f1cbc32";
-    hash = "sha256-m3/RF2Zx772KjPl2v95Ohrr9CptAPnIaOVxrUFLZhkY=";  
+    hash = "sha256-m3/RF2Zx772KjPl2v95Ohrr9CptAPnIaOVxrUFLZhkY=";
     fetchSubmodules = true;
   };
 
