@@ -43,6 +43,21 @@
             }
           ];
         };
+        vampirium = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./system/vampirium/configuration.nix
+            ./system/common.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.noderyos = ./users/noderyos/home.nix;
+              };
+            }
+          ];
+        };
       };
     };
 }
