@@ -12,6 +12,10 @@
   powerManagement.cpuFreqGovernor = "conservative";
   services.usbmuxd.enable = true;
 
+  hardware.pulseaudio.extraConfig = "
+    load-module module-bluetooth-policy auto_switch=false
+  ";
+
   environment.systemPackages = with pkgs; [
     libimobiledevice
     ifuse
