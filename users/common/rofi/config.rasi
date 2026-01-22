@@ -5,7 +5,7 @@
 * {
     font: "Berkeley 12";
     selected-normal-foreground:  @lightbg;
-    foreground:                  rgba ( 252, 175, 1, 100 % );
+    foreground:                  #e03a3e;
     normal-foreground:           @foreground;
     alternate-normal-background: @lightbg;
     red:                         rgba ( 220, 50, 47, 100 % );
@@ -14,13 +14,13 @@
     urgent-foreground:           @red;
     alternate-urgent-background: @lightbg;
     active-foreground:           @blue;
-    lightbg:                     rgba ( 186, 104, 16, 100 % );
+    lightbg:                     #202020;
     selected-active-foreground:  @background;
     alternate-active-background: @lightbg;
-    background:                  rgba ( 163, 84, 0, 100 % );
+    background:                  #1e1e1e;
     alternate-normal-foreground: @foreground;
     normal-background:           @background;
-    lightfg:                     rgba ( 255, 193, 48, 100 % );
+    lightfg:                     #e03a3e;
     selected-normal-background:  @lightfg;
     border-color:                @foreground;
     spacing:                     2;
