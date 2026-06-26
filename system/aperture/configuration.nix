@@ -10,6 +10,7 @@
   users.extraGroups.vboxusers.members = [ "noderyos" ];
 
   services.usbmuxd.enable = true;
+  services.avahi.enable = true;
 
   powerManagement.powertop.enable = true;
   services = {
@@ -24,11 +25,10 @@
         STOP_CHARGE_THRESH_BAT0 = 99;
       };
     };
+    pulseaudio.extraConfig = "
+      load-module module-bluetooth-policy auto_switch=false
+    ";
   };
-
-  hardware.pulseaudio.extraConfig = "
-    load-module module-bluetooth-policy auto_switch=false
-  ";
 
   environment.systemPackages = with pkgs; [
     libimobiledevice

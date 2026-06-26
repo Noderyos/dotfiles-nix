@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     jetbrains.clion
-    jetbrains.idea-community
+    jetbrains.idea-oss
     android-studio
     androidenv.androidPkgs.platform-tools
   ];

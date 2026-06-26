@@ -15,8 +15,8 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = [
-    pkgs.xorg.libX11
-    pkgs.xorg.libXft
+    pkgs.libx11
+    pkgs.libxft
     pkgs.pkg-config
     pkgs.harfbuzz
   ];

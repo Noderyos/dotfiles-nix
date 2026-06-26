@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     nix-output-monitor
     obs-studio
-    sublime4
+#    sublime4
     gpredict
     qbittorrent
     vesktop
@@ -32,5 +32,5 @@
     ./sdrpp
   ];
 
-  home.stateVersion = "25.05";
+  home.stateVersion = "26.05";
 }

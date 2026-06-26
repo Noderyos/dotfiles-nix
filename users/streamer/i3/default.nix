@@ -5,7 +5,7 @@
     brightnessctl
     networkmanagerapplet
     flameshot
-    xfce.thunar
+    thunar
   ];
   home.file.i3_config = {
     source = ./config;
