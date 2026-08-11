@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     nix-output-monitor
     obs-studio
-#    sublime4
+    #    sublime4
     gpredict
     qbittorrent
     vesktop
@@ -16,6 +16,7 @@
     lm_sensors
     nload
     htop
+    lazygit
   ];
 
   imports = [
