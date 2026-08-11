@@ -1,0 +1,128 @@
+{
+  "plugins": {
+    "auto-save.nvim": {
+      "rev": "979b6c82f60cfa80f4cf437d77446d0ded0addf0",
+      "src": "https://github.com/Pocco81/auto-save.nvim"
+    },
+    "cmp-buffer": {
+      "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
+      "src": "https://github.com/hrsh7th/cmp-buffer"
+    },
+    "cmp-nvim-lsp": {
+      "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
+      "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
+    },
+    "cmp-path": {
+      "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
+      "src": "https://github.com/hrsh7th/cmp-path"
+    },
+    "esp32.nvim": {
+      "rev": "57b3d174c3a063c3894bc41ddcf0e0289e7277e4",
+      "src": "https://github.com/Aietes/esp32.nvim"
+    },
+    "friendly-snippets": {
+      "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
+    "gitsigns.nvim": {
+      "rev": "31d6fb2d618bca1482b9f274751ead5f03461408",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "goto-preview": {
+      "rev": "d2d6923c9b9e0e43f0b9b566f261a8b1ae016540",
+      "src": "https://github.com/rmagatti/goto-preview"
+    },
+    "lsp_signature.nvim": {
+      "rev": "b7ace9ddb1640ce266012a45a672dfdaedfa5ec6",
+      "src": "https://github.com/ray-x/lsp_signature.nvim"
+    },
+    "lspkind-nvim": {
+      "rev": "c7274c48137396526b59d86232eabcdc7fed8a32",
+      "src": "https://github.com/onsails/lspkind-nvim"
+    },
+    "luarocks.nvim": {
+      "rev": "1db9093915eb16ba2473cfb8d343ace5ee04130a",
+      "src": "https://github.com/vhyrro/luarocks.nvim"
+    },
+    "mason-lspconfig.nvim": {
+      "rev": "67029ccdac1ef8941e13b826417bc0ffac24cc86",
+      "src": "https://github.com/williamboman/mason-lspconfig.nvim"
+    },
+    "mason.nvim": {
+      "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
+      "src": "https://github.com/williamboman/mason.nvim"
+    },
+    "material.nvim": {
+      "rev": "92f7366a9315cd386bc4fa4d716fde375dda210f",
+      "src": "https://github.com/marko-cerovac/material.nvim"
+    },
+    "nvim-cmp": {
+      "rev": "2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3",
+      "src": "https://github.com/hrsh7th/nvim-cmp"
+    },
+    "nvim-jdtls": {
+      "rev": "6e9d953f0b82bccdb834cfde0e893f3119c22592",
+      "src": "https://github.com/mfussenegger/nvim-jdtls"
+    },
+    "nvim-lspconfig": {
+      "rev": "43ed3797b266e1ee8d222e491379ad471c9d3146",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-nio": {
+      "rev": "edcc181a875301dd21840189aa2f2f9ad69fc172",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
+    },
+    "nvim-platformio.lua": {
+      "rev": "e65fd65565da5c1d98c568bd0cdcad16627cdb14",
+      "src": "https://github.com/anurag3301/nvim-platformio.lua"
+    },
+    "nvim-treesitter": {
+      "rev": "c9f9ed6c1892f629ea399f4ee7905f2686fa13f2",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "nvim-treesitter-refactor": {
+      "rev": "9cc0d22becf72e18808208cd0ce85032a2b19c6f",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-refactor"
+    },
+    "nvim-ts-autotag": {
+      "rev": "88c1453db4ba7dd24131086fe51fdf74e587d275",
+      "src": "https://github.com/windwp/nvim-ts-autotag"
+    },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "sonokai": {
+      "rev": "b023c5280b16fe2366f5e779d8d2756b3e5ee9c3",
+      "src": "https://github.com/sainnhe/sonokai"
+    },
+    "telescope-ui-select.nvim": {
+      "rev": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2",
+      "src": "https://github.com/nvim-telescope/telescope-ui-select.nvim"
+    },
+    "telescope.nvim": {
+      "rev": "427b576c16792edad01a92b89721d923c19ad60f",
+      "src": "https://github.com/nvim-telescope/telescope.nvim"
+    },
+    "toggle-lsp-diagnostics.nvim": {
+      "rev": "4c515b1625433306807e4a47756592fde0b83c82",
+      "src": "https://github.com/WhoIsSethDaniel/toggle-lsp-diagnostics.nvim"
+    },
+    "toggleterm.nvim": {
+      "rev": "9a88eae817ef395952e08650b3283726786fb5fb",
+      "src": "https://github.com/akinsho/toggleterm.nvim"
+    },
+    "tree-sitter-asm": {
+      "rev": "839741fef4dab5128952334624905c82b40c7133",
+      "src": "https://github.com/rush-rs/tree-sitter-asm"
+    },
+    "vim-asm_ca65": {
+      "rev": "57e1203db2411c2541b55a13c3498d282c0236f3",
+      "src": "https://github.com/maxbane/vim-asm_ca65"
+    },
+    "vim-vsnip": {
+      "rev": "9bcfabea653abdcdac584283b5097c3f8760abaa",
+      "src": "https://github.com/hrsh7th/vim-vsnip"
+    }
+  }
+}
